@@ -5,6 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>POTLAB — Netherite Pot & Diamond Pot Training Library</title>
 <meta name="description" content="A searchable training library of YouTube tutorials, guides and gameplay for Minecraft Netherite Pot and Diamond Pot PvP.">
+<link rel="canonical" href="https://potlab.net/">
+<meta name="theme-color" content="#0a0d12">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'%3E%3Crect%20width='32'%20height='32'%20rx='7'%20fill='%230a0d12'/%3E%3Cpath%20d='M8%208H24L8%2024Z'%20fill='%23c9a184'/%3E%3Cpath%20d='M24%208V24H8Z'%20fill='%2345c8ff'/%3E%3C/svg%3E">
+<!-- Open Graph / social share (rich embeds in Discord, Twitter, etc.) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="POTLAB">
+<meta property="og:title" content="POTLAB — Minecraft PvP Training Library">
+<meta property="og:description" content="Every worthwhile Minecraft PvP tutorial in one index — sorted by mode, skill level and training aspect. Netherite Pot, Diamond Pot, Crystal, Sword & more.">
+<meta property="og:url" content="https://potlab.net/">
+<meta property="og:image" content="https://potlab.net/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="POTLAB — Minecraft PvP Training Library">
+<meta name="twitter:description" content="Every worthwhile Minecraft PvP tutorial in one index — sorted by mode, skill level and training aspect.">
+<meta name="twitter:image" content="https://potlab.net/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -61,7 +77,13 @@
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @keyframes slidein{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:translateX(0)}}
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+/* dark, on-brand scrollbar so it doesn't clash with the obsidian theme */
+html{scrollbar-color:var(--line) var(--void);scrollbar-width:thin}
+::-webkit-scrollbar{width:12px;height:12px}
+::-webkit-scrollbar-track{background:var(--void)}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px;border:3px solid var(--void)}
+::-webkit-scrollbar-thumb:hover{background:var(--faint)}
 body{background:var(--void);color:var(--text);font-family:var(--font-body);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
@@ -203,6 +225,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   display:flex;flex-direction:column;transition:transform .28s var(--ease),border-color .28s var(--ease),box-shadow .28s var(--ease);position:relative;
   animation:rise .55s var(--ease) both}
 .card:hover{transform:translateY(-5px);border-color:var(--line);box-shadow:var(--shadow)}
+.card:active{transform:translateY(-2px)}
 .card .edge{height:3px}
 .card.k-neth .edge{background:var(--nether)} .card.k-dia .edge{background:var(--diamond)} .card.k-sword .edge{background:var(--steel)} .card.k-smp .edge{background:var(--smp)} .card.k-diasmp .edge{background:var(--diasmp)} .card.k-crystal .edge{background:var(--crystal)} .card.k-mace .edge{background:var(--mace)} .card.k-vanilla .edge{background:var(--vanilla)} .card.k-uhc .edge{background:var(--uhc)} .card.k-axe .edge{background:var(--axe)} .card.k-fund .edge{background:var(--emerald)}
 .card.k-both .edge{background:linear-gradient(90deg,var(--nether),var(--diamond))}
@@ -256,6 +279,24 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .detail{max-width:980px;margin:0 auto;padding:34px 22px 90px}
 .crumb{font:600 13px var(--font-head);color:var(--dim);display:inline-flex;gap:8px;align-items:center;margin-bottom:22px}
 .crumb:hover{color:var(--emerald)}
+/* inline player */
+.dstage{margin-bottom:22px}
+.dbar{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.dbar-label{font-family:var(--font-px);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--faint)}
+.dbar .dyt{margin-left:auto;display:inline-flex;align-items:center;gap:7px;background:var(--raise);
+  border:1px solid var(--line);border-radius:10px;padding:8px 15px;font:700 13px var(--font-head);color:var(--text);transition:.15s}
+.dbar .dyt:hover{background:#ff0000;color:#fff;border-color:#ff0000}
+.dplayer{position:relative;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;
+  border:1px solid var(--line);background:#000;cursor:pointer;max-width:100%}
+.dplayer img{width:100%;height:100%;object-fit:cover;display:block}
+.dplayer .dplay{position:absolute;inset:0;display:grid;place-items:center;background:rgba(6,8,11,.30);transition:.15s}
+.dplayer:hover .dplay{background:rgba(6,8,11,.12)}
+.dplayer .dplay>span{width:76px;height:76px;border-radius:50%;background:#ff0000;display:grid;place-items:center;
+  box-shadow:0 8px 30px rgba(255,0,0,.4);transition:transform .15s}
+.dplayer:hover .dplay>span{transform:scale(1.07)}
+.dplayer .dplay svg{width:30px;height:30px;fill:#fff;margin-left:4px}
+.dplayer iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.dinfo.wide{max-width:820px}
 .dgrid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:30px;align-items:start}
 .dthumb{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);display:block}
 .dthumb img{width:100%;aspect-ratio:16/9;object-fit:cover}
@@ -305,6 +346,46 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .btn.primary:hover{filter:brightness(1.1)}
 .btn.ghost{border:1px solid var(--line);color:var(--dim)}
 .btn.ghost:hover{color:var(--text);border-color:var(--dim)}
+/* plain .btn gets a subtle surface so it's visible on its own */
+.btn{border:1px solid var(--line);background:var(--raise);color:var(--text)}
+.btn.primary{border-color:transparent}
+.btn.ghost{background:transparent}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translateY(1px)}
+.chip:active{transform:scale(.96)}
+.modecard:active{transform:translateY(-1px)}
+.btn.gbtn{background:#fff;color:#1f1f1f;border-color:#dadce0;font-weight:600}
+.btn.gbtn:hover{background:#f5f6f7;filter:none}
+.btn.danger{background:var(--axe-dim);color:var(--axe);border-color:var(--axe)}
+.btn.danger:hover{background:var(--axe);color:var(--void);filter:none}
+.fetched.rm .btn{margin-left:auto;flex:0 0 auto}
+/* admin: list of added videos with per-row remove */
+.addedlist{display:flex;flex-direction:column;gap:8px}
+.addedrow{display:flex;align-items:center;gap:12px;background:var(--void);border:1px solid var(--line-soft);
+  border-radius:var(--radius-sm);padding:8px 10px}
+.addedrow img{width:80px;aspect-ratio:16/9;object-fit:cover;border-radius:5px;flex:0 0 auto;background:var(--raise)}
+.addedrow .ar-info{flex:1;min-width:0}
+.addedrow .ar-info b{display:block;font:600 13.5px var(--font-head);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.addedrow .ar-info span{font-size:12px;color:var(--dim)}
+.btn.danger.sm{padding:6px 13px;font-size:12px;flex:0 0 auto}
+/* account panel rows */
+.acct-row{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid var(--line-soft);font-size:14px;margin:0}
+.acct-row span{color:var(--dim)} .acct-row b{color:var(--text);text-align:right}
+/* "or" divider */
+.au-or{display:flex;align-items:center;gap:12px;color:var(--faint);font-size:12px;margin:4px 0 14px}
+.au-or::before,.au-or::after{content:"";flex:1;height:1px;background:var(--line-soft)}
+/* For You empty states */
+.foryou-empty{max-width:520px;margin:60px auto;text-align:center;padding:20px}
+.foryou-empty.inline{margin:30px auto}
+.foryou-empty .fy-lock{font-size:40px;color:var(--emerald);margin-bottom:10px}
+.foryou-empty h1,.foryou-empty h2{font-family:var(--font-head);margin-bottom:8px}
+.foryou-empty .sub{color:var(--dim);margin-bottom:20px;line-height:1.5}
+/* compact hero for the feed */
+.hero.compact{padding:0}
+.hero.compact .hero-inner{padding-top:44px;padding-bottom:30px}
+/* recommendation reason ribbon on cards */
+.fy-reason{display:inline-block;font:600 10.5px var(--font-head);color:var(--emerald);
+  background:var(--emerald-dim);border-radius:99px;padding:3px 9px;margin-bottom:9px;letter-spacing:.3px}
 .hint{font-size:12.5px;color:var(--faint);margin-top:6px}
 .fetched{display:none;align-items:center;gap:12px;background:var(--void);border:1px solid var(--line-soft);
   border-radius:var(--radius-sm);padding:10px;margin-top:12px}
@@ -434,7 +515,9 @@ footer b{font-family:var(--font-px);font-size:11px;color:var(--dim)}
   </div>
   <nav class="topnav">
     <a href="#/" data-nav="home">Videos</a>
+    <a href="#/foryou" data-nav="foryou">For you</a>
     <a href="#/guide" data-nav="guide">Text guide</a>
+    <a href="#/account" data-nav="account" id="acctlink">Sign in</a>
   </nav>
 </header>
 
@@ -1301,32 +1384,59 @@ function deriveModes(v){
   return ["fund"];                    // legacy "both" and anything unrecognised
 }
 
+/* base videos = the built-in seed list, plus anything this browser
+   added before Firestore existed (kept as a harmless fallback). The
+   shared, everyone-sees-them videos are merged in by loadRemoteVideos(). */
+function baseVideos(){
+  const base = SEED_VIDEOS.map(v => ({...v}));
+  try{
+    const saved = JSON.parse(localStorage.getItem("potlab_custom") || "[]");
+    for(const v of saved) if(!base.some(x => x.id === v.id)) base.push(v);
+  }catch(e){}
+  return base;
+}
+
 const store = {
   videos: [],
   query: "",
   filters: { kit:new Set(), ver:new Set(), level:new Set(), format:new Set(), topic:new Set() },
-  authed: false,
-  load(){
-    this.videos = SEED_VIDEOS.map(v => ({...v}));
-    /* progressive enhancement: admin-added videos persist when the
-       file is hosted; wrapped so preview sandboxes never break */
-    try{
-      const saved = JSON.parse(localStorage.getItem("potlab_custom") || "[]");
-      for(const v of saved) if(!this.videos.some(x => x.id === v.id)) this.videos.push(v);
-    }catch(e){ /* storage unavailable — session-only additions */ }
+  user: null,      // Firebase user object when signed in, else null
+  isAdmin: false,  // true when signed-in user's email is whitelisted
+  removedIds: new Set(),
+  remoteVideoIds: new Set(),   // ids that live in the shared Firestore library
+  finalize(){
     this.videos.forEach(v => { v.modes = deriveModes(v); v.ver = v.ver || "1.9"; });
   },
-  add(v){
-    this.videos.push(v);
-    try{
-      const saved = JSON.parse(localStorage.getItem("potlab_custom") || "[]");
-      saved.push(v);
-      localStorage.setItem("potlab_custom", JSON.stringify(saved));
-      return true;
-    }catch(e){ return false; }
+  load(){                       // instant render from seed while Firestore loads
+    this.videos = baseVideos();
+    this.finalize();
   },
   byId(id){ return this.videos.find(v => v.id === id); }
 };
+
+/* Merge the shared Firestore library over the seed list. Docs flagged
+   {removed:true} act as tombstones so an admin can hide ANY video
+   (seed or added) for everyone. */
+async function loadRemoteVideos(){
+  if(!window.potDB) return;
+  let docs;
+  try{ docs = await window.potDB.loadVideos(); }
+  catch(e){ return; }
+  const removed = new Set();
+  const map = new Map(baseVideos().map(v => [v.id, v]));
+  const remoteIds = new Set();
+  for(const d of docs){
+    if(d.removed){ removed.add(d.id); }
+    else { map.set(d.id, d); remoteIds.add(d.id); }
+  }
+  for(const id of removed){ map.delete(id); remoteIds.delete(id); }
+  store.removedIds = removed;
+  store.remoteVideoIds = remoteIds;
+  store.videos = [...map.values()];
+  store.finalize();
+  route();
+  hydrate();
+}
 
 /* ------------------------- helpers ----------------------------- */
 const $  = s => document.querySelector(s);
@@ -1376,7 +1486,7 @@ function showPreviewNotice(){
   document.body.prepend(n);
 }
 function thumbImg(v, lazy=true){
-  return `<img ${lazy ? 'loading="lazy"' : ""} src="${thumb(v.id)}" alt="Thumbnail: ${esc(v.title)}"
+  return `<img ${lazy ? 'loading="lazy"' : ""} decoding="async" src="${thumb(v.id)}" alt="Thumbnail: ${esc(v.title)}"
     referrerpolicy="no-referrer" data-vid="${esc(v.id)}" data-kit="${primaryMode(v)}" data-kitlabel="${esc(modeLabel(v))}"
     onerror="thumbFail(this)">`;
 }
@@ -1597,33 +1707,34 @@ function detailHTML(v){
   return `
   <div class="detail">
     <a class="crumb" href="#/">← Back to library</a>
-    <div class="dgrid">
-      <a class="dthumb" href="${esc(ytUrl(v))}" target="_blank" rel="noopener" aria-label="Watch on YouTube">
+    <div class="dstage">
+      <div class="dbar">
+        <span class="dbar-label">Now viewing</span>
+        <a class="dyt" href="${esc(ytUrl(v))}" target="_blank" rel="noopener">Watch on YouTube ↗</a>
+      </div>
+      <div class="dplayer" id="dplayer" data-vid="${esc(v.id)}" role="button" tabindex="0" aria-label="Play ${esc(v.title)}">
         ${thumbImg(v, false)}
-        <span class="play"><span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></span>
-      </a>
-      <div class="dinfo">
-        <div class="badges">
-          ${modeBadges(v)}
-          <span class="badge ver-${v.ver === "1.8" ? "old" : "mod"}">${v.ver === "1.8" ? "1.8 PvP" : "1.9+ PvP"}</span>
-          <span class="badge ${v.level}">${cap(v.level)}</span>
-          <span class="badge" style="color:var(--dim);background:var(--raise)">${esc(v.format)}</span>
-        </div>
-        <h1>${esc(v.title)}</h1>
-        <div class="cmeta">
-          ${v.creator ? `<span class="creator">${esc(v.creator)}</span>` : ""}
-          ${v.date ? `<span>${fmtDate(v.date)}</span>` : ""}
-          ${v.duration ? `<span>${esc(v.duration)}</span>` : ""}
-        </div>
-        <p class="desc">${esc(v.desc)}</p>
-        <a class="watchbtn" href="${esc(ytUrl(v))}" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Watch on YouTube
-        </a>
-        <div class="dtopics">
-          <h4>Topics covered</h4>
-          <div class="ctags">${v.topics.map(t => `<i>${esc(t)}</i>`).join("")}
-            ${v.tags.map(t => `<i style="opacity:.6">#${esc(t)}</i>`).join("")}</div>
-        </div>
+        <span class="dplay"><span><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></span>
+      </div>
+    </div>
+    <div class="dinfo wide">
+      <div class="badges">
+        ${modeBadges(v)}
+        <span class="badge ver-${v.ver === "1.8" ? "old" : "mod"}">${v.ver === "1.8" ? "1.8 PvP" : "1.9+ PvP"}</span>
+        <span class="badge ${v.level}">${cap(v.level)}</span>
+        <span class="badge" style="color:var(--dim);background:var(--raise)">${esc(v.format)}</span>
+      </div>
+      <h1>${esc(v.title)}</h1>
+      <div class="cmeta">
+        ${v.creator ? `<span class="creator">${esc(v.creator)}</span>` : ""}
+        ${v.date ? `<span>${fmtDate(v.date)}</span>` : ""}
+        ${v.duration ? `<span>${esc(v.duration)}</span>` : ""}
+      </div>
+      <p class="desc">${esc(v.desc)}</p>
+      <div class="dtopics">
+        <h4>Topics covered</h4>
+        <div class="ctags">${v.topics.map(t => `<i>${esc(t)}</i>`).join("")}
+          ${v.tags.map(t => `<i style="opacity:.6">#${esc(t)}</i>`).join("")}</div>
       </div>
     </div>
     <div class="related">
@@ -1631,6 +1742,22 @@ function detailHTML(v){
       <div class="grid">${related(v).map(cardHTML).join("")}</div>
     </div>
   </div>`;
+}
+
+/* click-to-play: swap the thumbnail for YouTube's real player.
+   autoplay works because it follows a user click; sound is allowed.
+   Uses the standard youtube.com/embed so a viewer's own YouTube
+   Premium (if they're signed in on this browser) plays ad-free. */
+function playInline(p){
+  if(!p || p.dataset.playing) return;
+  const id = p.dataset.vid;
+  if(store.user) HISTORY.logClick(id);        // watching = strong interest signal
+  p.dataset.playing = "1";
+  const src = "https://www.youtube.com/embed/" + encodeURIComponent(id) +
+              "?autoplay=1&rel=0&modestbranding=1&playsinline=1";
+  p.innerHTML = `<iframe src="${src}" title="YouTube video player"
+    allow="autoplay; encrypted-media; picture-in-picture; web-share; fullscreen"
+    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
 }
 
 /* ------------------------- TEXT GUIDE --------------------------
@@ -2403,52 +2530,10 @@ function guideHTML(){
 }
 
 /* --------------------------- ADMIN ----------------------------- */
-/* ---- Admin auth ------------------------------------------------
-   NOTE: this is a static, client-side file, so this is obscurity, not
-   real security — it stops casual access but a determined person who
-   reads the source can bypass it. The password is never stored in
-   plaintext; only a salted SHA-256 hash of "username:password" is kept
-   and compared at login. For true privacy you need a real backend. */
-const ADMIN_SALT = "potlab::v1::";
-const ADMIN_HASH = "d5f1f02419dcffcace23c24d66d4cfe2369e4eb70716d65dd0ad8d921aa4ffb9";
-async function sha256Hex(str){
-  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(str));
-  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
-}
-async function tryLogin(){
-  const u = ($("#lg-user") && $("#lg-user").value || "").trim();
-  const p = ($("#lg-pass") && $("#lg-pass").value || "");
-  const err = $("#lg-err");
-  try{
-    const hash = await sha256Hex(ADMIN_SALT + u + ":" + p);
-    if(hash === ADMIN_HASH){
-      store.authed = true;
-      route();
-    } else if(err){
-      err.textContent = "Incorrect username or password.";
-      err.style.display = "block";
-    }
-  }catch(e){
-    if(err){ err.textContent = "Login unavailable (needs a secure/https or file context)."; err.style.display = "block"; }
-  }
-}
-function loginHTML(){
-  return `
-  <div class="admin login">
-    <div class="loginbox">
-      <div class="lg-lock">🔒</div>
-      <h1>Restricted</h1>
-      <p class="sub">This area is for site staff. Enter your credentials to continue.</p>
-      <div class="field"><label for="lg-user">Username</label>
-        <input id="lg-user" type="text" autocomplete="off" spellcheck="false" placeholder="username"></div>
-      <div class="field"><label for="lg-pass">Password</label>
-        <input id="lg-pass" type="password" autocomplete="off" placeholder="password"></div>
-      <p id="lg-err" class="lg-err" role="alert"></p>
-      <button id="lg-go" class="btn primary" style="width:100%">Log in</button>
-      <p class="lg-note">Not staff? <a href="#/">Back to the library →</a></p>
-    </div>
-  </div>`;
-}
+/* Admin access is now handled by Firebase: the panel opens only for a
+   signed-in account whose email is listed in ADMIN_EMAILS (see top of
+   script). Identity is verified server-side by Firebase, so this is a
+   real gate on *who* can open the panel — no password ever lives here. */
 
 function adminHTML(){
   return `
@@ -2506,8 +2591,28 @@ function adminHTML(){
       <button class="btn primary" id="a-save">Add to library</button>
       <button class="btn ghost" id="a-json">Show JSON for permanent storage</button>
       <div class="jsonout" id="a-out">
-        <p class="hint">To make this video permanent for everyone, copy the object below into the <code>SEED_VIDEOS</code> array in this file (or your videos.json if you split the data out):</p>
+        <p class="hint">Adding a video already publishes it to the site for everyone. This JSON is just an optional backup you can keep:</p>
         <pre id="a-jsonpre"></pre>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>3 · Your added videos</h3>
+      <p class="hint">Videos you've published through this panel. Tap Remove to take one off the site for everyone.</p>
+      <div id="a-addedlist">${adminAddedListHTML()}</div>
+    </div>
+
+    <div class="panel">
+      <h3>4 · Remove by link</h3>
+      <p class="hint">Paste the YouTube link (or 11-character ID) of a video you want taken off the site. This removes it for everyone.</p>
+      <div class="fetchrow">
+        <input id="a-rmurl" type="url" placeholder="https://www.youtube.com/watch?v=…" aria-label="YouTube URL to remove">
+        <button class="btn" id="a-rmfind">Find</button>
+      </div>
+      <div class="fetched rm" id="a-rmpreview">
+        <img id="a-rmthumb" alt="">
+        <div class="ft"><b id="a-rmtitle"></b><span id="a-rmcreator"></span></div>
+        <button class="btn danger" id="a-rmgo">Remove from site</button>
       </div>
     </div>
   </div>`;
@@ -2563,10 +2668,77 @@ function adminBuild(){
 function adminSave(){
   const v = adminBuild(); if(!v) return;
   if(store.byId(v.id)) return toast("That video is already in the library");
-  const persisted = store.add(v);
-  toast(persisted ? "Added & saved to this browser" : "Added for this session — copy the JSON to keep it");
+  v.addedAt = Date.now();
+  store.videos.push(v);
+  store.removedIds.delete(v.id);           // in case it was previously removed
+  store.remoteVideoIds.add(v.id);
+  store.finalize();
+  if(window.potDB && store.isAdmin){
+    window.potDB.saveVideo(v)
+      .then(() => toast("Added & published to the site"))
+      .catch(() => toast("Added, but publishing failed — check your connection"));
+  } else {
+    toast("Added for this session — sign in as admin to publish");
+  }
   $("#a-jsonpre").textContent = JSON.stringify(v, null, 2) + ",";
   $("#a-out").classList.add("show");
+  route();
+}
+
+/* shared removal used by both the link box and the added-videos list */
+function removeVideoById(id){
+  const v = store.byId(id);
+  const title = v ? v.title : id;
+  store.videos = store.videos.filter(x => x.id !== id);
+  store.removedIds.add(id);
+  store.remoteVideoIds.delete(id);
+  try{                                      // also drop from this browser's old local cache
+    const saved = JSON.parse(localStorage.getItem("potlab_custom") || "[]").filter(x => x.id !== id);
+    localStorage.setItem("potlab_custom", JSON.stringify(saved));
+  }catch(e){}
+  if(window.potDB && store.isAdmin){
+    window.potDB.removeVideo(id)
+      .then(() => toast("Removed “" + title + "” from the site"))
+      .catch(() => toast("Removed here, but the change didn't save — check your connection"));
+  } else {
+    toast("Removed for this session");
+  }
+  route();
+}
+
+/* ---- remove a video (by URL or ID) ---- */
+let removeDraft = null;
+function adminRemoveFind(){
+  const raw = ($("#a-rmurl") && $("#a-rmurl").value || "").trim();
+  const id = parseYtId(raw) || (/^[\w-]{11}$/.test(raw) ? raw : null);
+  if(!id) return toast("That doesn't look like a YouTube link or ID");
+  const v = store.byId(id);
+  if(!v){ toast("No video with that link is on the site"); return; }
+  removeDraft = v;
+  $("#a-rmthumb").src = thumb(v.id);
+  $("#a-rmtitle").textContent = v.title;
+  $("#a-rmcreator").textContent = v.creator || "";
+  $("#a-rmpreview").classList.add("show");
+}
+function adminRemoveGo(){
+  if(!removeDraft) return;
+  removeVideoById(removeDraft.id);
+  removeDraft = null;
+  $("#a-rmpreview").classList.remove("show");
+  if($("#a-rmurl")) $("#a-rmurl").value = "";
+}
+
+/* list of videos added through the panel, newest first, each removable */
+function adminAddedListHTML(){
+  const ids = store.remoteVideoIds || new Set();
+  const list = store.videos.filter(v => ids.has(v.id)).sort((a,b) => (b.addedAt||0) - (a.addedAt||0));
+  if(!list.length) return `<p class="hint">No videos added through this panel yet. When you add one above, it shows up here so you can remove it with one tap.</p>`;
+  return `<div class="addedlist">${list.map(v => `
+    <div class="addedrow">
+      <img src="${thumb(v.id)}" alt="" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">
+      <div class="ar-info"><b>${esc(v.title)}</b><span>${esc(v.creator || "")}</span></div>
+      <button class="btn danger sm" data-rm="${esc(v.id)}" aria-label="Remove ${esc(v.title)}">Remove</button>
+    </div>`).join("")}</div>`;
 }
 
 /* --------------------------- ROUTER ----------------------------
@@ -2574,6 +2746,346 @@ function adminSave(){
    nav links appear dead. Routing now runs off an internal variable;
    the URL hash is synced as a best-effort bonus for real browsers
    (deep links + back/forward still work there). */
+/* ================================================================
+   ACCOUNTS · HISTORY · RECOMMENDATIONS
+   ----------------------------------------------------------------
+   Auth is real (Firebase, wired in the module script at the bottom).
+   History is stored per-account in localStorage under the user's uid,
+   so two accounts on the same browser stay separate. To make history
+   follow a user across devices, swap the HISTORY read/write calls for
+   Firestore (one clean change — see note in the module script).
+   ================================================================ */
+
+/* --- who may open the admin panel (by account email, not password) ---
+   Add the email of any account that should be an admin. When that
+   person signs in with Firebase, they get the admin panel. */
+const ADMIN_EMAILS = [
+  "valus779@gmail.com",   // Admirax
+];
+
+/* recency-weighted, capped activity log kept per account */
+const HISTORY = {
+  data: { views:[], searches:[], clicks:[] },
+  uid: null,
+  _saveT: null,
+  localKey(uid){ return "potlab_hist_" + (uid || "guest"); },
+  norm(h){
+    return {
+      views:    Array.isArray(h && h.views)    ? h.views    : [],
+      searches: Array.isArray(h && h.searches) ? h.searches : [],
+      clicks:   Array.isArray(h && h.clicks)   ? h.clicks   : []
+    };
+  },
+  _readLocal(uid){
+    try{ return this.norm(JSON.parse(localStorage.getItem(this.localKey(uid)) || "{}")); }
+    catch(e){ return { views:[], searches:[], clicks:[] }; }
+  },
+  _cacheLocal(){ try{ localStorage.setItem(this.localKey(this.uid), JSON.stringify(this.data)); }catch(e){} },
+  /* load a signed-in user's history: show local cache instantly, then
+     replace with the authoritative Firestore copy so it's the same on
+     every device */
+  async load(uid){
+    this.uid = uid;
+    this.data = this._readLocal(uid);
+    route();
+    if(window.potDB && uid){
+      try{
+        const remote = await window.potDB.loadHistory(uid);
+        if(remote){ this.data = this.norm(remote); this._cacheLocal(); route(); }
+        else { this._persist(); }        // first time on this account — seed remote from local
+      }catch(e){ /* offline — keep local */ }
+    }
+  },
+  reset(){ this.uid = null; this.data = { views:[], searches:[], clicks:[] }; },
+  read(){ return this.data; },
+  _persist(){
+    this._cacheLocal();                  // instant, offline-safe
+    if(window.potDB && this.uid){        // sync to the cloud, debounced
+      clearTimeout(this._saveT);
+      const snap = JSON.stringify(this.data);
+      this._saveT = setTimeout(() => { window.potDB.saveHistory(this.uid, JSON.parse(snap)).catch(()=>{}); }, 1200);
+    }
+  },
+  logView(id){
+    if(!store.user) return;              // only track signed-in accounts
+    this.data.views = [{ id, t: Date.now() }, ...this.data.views.filter(v => v.id !== id)].slice(0, 100);
+    this._persist();
+  },
+  logClick(id){
+    if(!store.user || !id) return;
+    this.data.clicks = [{ id, t: Date.now() }, ...this.data.clicks.filter(c => c.id !== id)].slice(0, 100);
+    this._persist();
+  },
+  logSearch(q){
+    if(!store.user) return;
+    q = String(q || "").trim().toLowerCase();
+    if(q.length < 2) return;
+    this.data.searches = [{ q, t: Date.now() }, ...this.data.searches.filter(s => s.q !== q)].slice(0, 40);
+    this._persist();
+  },
+  clear(){
+    this.data = { views:[], searches:[], clicks:[] };
+    this._cacheLocal();
+    if(window.potDB && this.uid) window.potDB.saveHistory(this.uid, this.data).catch(()=>{});
+  }
+};
+
+/* recentEngaged — videos the user has opened or clicked, newest first */
+function recentEngaged(){
+  const h = HISTORY.read();
+  const seen = new Set();
+  const out = [];
+  for(const e of [...h.views, ...h.clicks].sort((a,b) => b.t - a.t)){
+    if(seen.has(e.id)) continue;
+    const v = store.byId(e.id);
+    if(v){ seen.add(e.id); out.push(v); }
+  }
+  return out;
+}
+
+/* buildProfile — turn the account's history into weighted tastes.
+   Newer activity counts more (halves roughly every ~2 weeks). */
+function buildProfile(){
+  const h = HISTORY.read();
+  const now = Date.now();
+  const HALF = 1000*60*60*24*14;                    // 14-day half-life
+  const decay = t => Math.pow(0.5, (now - t) / HALF);
+  const prof = { modes:{}, topics:{}, creators:{}, levels:{}, terms:{} };
+  const bump = (o, k, w) => { if(k) o[k] = (o[k]||0) + w; };
+
+  const addVideo = (id, t, base) => {
+    const v = store.byId(id); if(!v) return;
+    const w = base * decay(t);
+    bump(prof.modes, v.modes[0], w);
+    (v.topics||[]).forEach(tp => bump(prof.topics, tp, w));
+    bump(prof.creators, v.creator, w * 1.2);
+    bump(prof.levels, v.level, w * 0.5);
+  };
+  h.views.forEach(e => addVideo(e.id, e.t, 2));     // opening a detail page = strong
+  h.clicks.forEach(e => addVideo(e.id, e.t, 3));    // clicking through to YouTube = strongest
+  h.searches.forEach(e => {
+    const w = decay(e.t);
+    e.q.split(/\s+/).filter(x => x.length > 2).forEach(term => bump(prof.terms, term, w));
+  });
+  return prof;
+}
+
+function hasHistory(){
+  const h = HISTORY.read();
+  return h.views.length || h.clicks.length || h.searches.length;
+}
+
+/* recommend — score every unseen-ish video against the taste profile.
+   Returns { list, reasons } where reasons[id] explains the top match. */
+function recommend(limit = 12){
+  const prof = buildProfile();
+  const engagedIds = new Set(recentEngaged().map(v => v.id));
+  const scored = [];
+
+  for(const v of store.videos){
+    let score = 0;
+    const why = [];
+    const mw = prof.modes[v.modes[0]] || 0;
+    if(mw){ score += mw * 3; why.push(["mode", MODES[v.modes[0]], mw]); }
+    for(const tp of (v.topics||[])){
+      const tw = prof.topics[tp] || 0;
+      if(tw){ score += tw * 2; why.push(["topic", tp, tw]); }
+    }
+    const cw = prof.creators[v.creator] || 0;
+    if(cw){ score += cw * 4; why.push(["creator", v.creator, cw]); }
+    score += (prof.levels[v.level] || 0);
+    // search-term matches against this video's text
+    const hay = [v.title, v.creator, (v.topics||[]).join(" "), (v.tags||[]).join(" ")].join(" ").toLowerCase();
+    for(const term in prof.terms){ if(hay.includes(term)){ score += prof.terms[term] * 1.5; why.push(["search", term, prof.terms[term]]); } }
+    // gently downrank things already engaged so the feed keeps surfacing new stuff
+    if(engagedIds.has(v.id)) score *= 0.25;
+    if(score > 0) scored.push({ v, score, why });
+  }
+
+  scored.sort((a,b) => b.score - a.score);
+  const top = scored.slice(0, limit);
+  const reasons = {};
+  for(const s of top){
+    const best = s.why.sort((a,b) => b[2] - a[2])[0];
+    if(best){
+      reasons[s.v.id] =
+        best[0] === "creator" ? `Because you watch ${best[1]}` :
+        best[0] === "mode"    ? `More ${best[1]} for you` :
+        best[0] === "search"  ? `Matches your search “${best[1]}”` :
+                                `Because you like ${best[1]}`;
+    }
+  }
+  return { list: top.map(s => s.v), reasons };
+}
+
+/* ------------------------- FOR YOU view ------------------------ */
+function forYouHTML(){
+  if(!store.user){
+    return `
+    <div class="shell">
+      <div class="foryou-empty">
+        <div class="fy-lock">✦</div>
+        <h1>Your personalized feed</h1>
+        <p class="sub">Sign in and POTLAB learns what you watch and search, then recommends the videos most likely to level you up.</p>
+        <a href="#/account" class="btn primary" style="display:inline-flex;margin-top:6px">Sign in to get recommendations</a>
+      </div>
+    </div>`;
+  }
+
+  const recent = recentEngaged().slice(0, 8);
+  const { list, reasons } = recommend(12);
+  const grid = (vs, withReason) => `<div class="grid">${vs.map(v => {
+    if(!withReason) return cardHTML(v);
+    // inject a "reason" ribbon into the standard card
+    return cardHTML(v).replace('<div class="cbody">',
+      `<div class="cbody"><div class="fy-reason">${esc(reasons[v.id] || "Recommended for you")}</div>`);
+  }).join("")}</div>`;
+
+  const firstName = (store.user.displayName || store.user.email || "there").split(/[ @]/)[0];
+
+  let body = "";
+  if(!hasHistory()){
+    body = `
+      <div class="foryou-empty inline">
+        <h2>Let’s learn your taste</h2>
+        <p class="sub">Open a few videos or run a search or two. As you browse, this feed fills up with picks chosen from what you watch.</p>
+        <a href="#/" class="btn primary" style="display:inline-flex">Browse the library →</a>
+      </div>`;
+  } else {
+    body = `
+      ${list.length ? `
+        <div class="section-head sub"><span class="icon">✦</span><h2>Recommended for you</h2>
+          <span class="glabel">${list.length}</span><span class="bar"></span>
+          <span class="count">chosen from what you watch &amp; search</span></div>
+        ${grid(list, true)}` : ""}
+      ${recent.length ? `
+        <div class="section-head sub"><span class="icon">↻</span><h2>Recently watched</h2>
+          <span class="glabel">${recent.length}</span><span class="bar"></span>
+          <span class="count">your history on this account</span></div>
+        ${grid(recent, false)}` : ""}`;
+  }
+
+  return `
+  <div class="hero compact"><div class="hero-bg"></div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">✦ Your feed</div>
+      <h1>Welcome back, <span class="grad">${esc(firstName)}</span></h1>
+      <p>Recommendations built from the videos you open and the things you search — the more you use POTLAB, the sharper they get.</p>
+    </div>
+  </div>
+  <div class="shell">${body}</div>`;
+}
+
+/* ------------------------- ACCOUNT view ------------------------ */
+function accountHTML(){
+  if(store.user){
+    const u = store.user;
+    const h = HISTORY.read();
+    return `
+    <div class="admin login" style="max-width:460px">
+      <div class="loginbox" style="text-align:left">
+        <div style="text-align:center"><div class="lg-lock">👤</div>
+          <h1>Your account</h1></div>
+        <p class="acct-row"><span>Signed in as</span><b>${esc(u.email || u.displayName || "account")}</b></p>
+        ${store.isAdmin ? `<p class="acct-row"><span>Role</span><b style="color:var(--emerald)">Admin</b></p>` : ""}
+        <p class="acct-row"><span>Tracked</span><b>${h.views.length} opened · ${h.clicks.length} clicked · ${h.searches.length} searches</b></p>
+        <a href="#/foryou" class="btn primary" style="width:100%;margin-top:8px">Go to your feed →</a>
+        ${store.isAdmin ? `<a href="#/admin" class="btn" style="width:100%;margin-top:10px">Open admin panel</a>` : ""}
+        <button id="acct-clear" class="btn ghost" style="width:100%;margin-top:10px">Clear my history</button>
+        <button id="acct-signout" class="btn" style="width:100%;margin-top:10px">Sign out</button>
+      </div>
+    </div>`;
+  }
+
+  return `
+  <div class="admin login">
+    <div class="loginbox">
+      <div class="lg-lock">🔑</div>
+      <h1>Sign in to POTLAB</h1>
+      <p class="sub">Save your history and unlock personalized recommendations.</p>
+
+      <button id="au-google" class="btn gbtn" style="width:100%;margin-bottom:16px">
+        <svg viewBox="0 0 24 24" width="17" height="17" style="vertical-align:-3px;margin-right:8px"><path fill="#4285F4" d="M22.5 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.9a5 5 0 0 1-2.2 3.3v2.7h3.5c2-1.9 3.3-4.7 3.3-7.8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.5-2.7c-1 .7-2.3 1.1-3.8 1.1-2.9 0-5.4-2-6.3-4.6H2v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.7 14.1a6.6 6.6 0 0 1 0-4.2V7.1H2a11 11 0 0 0 0 9.8z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3 .6 4.2 1.6l3.1-3.1A11 11 0 0 0 2 7.1l3.7 2.8C6.6 7.4 9.1 5.4 12 5.4z"/></svg>
+        Continue with Google
+      </button>
+
+      <div class="au-or"><span>or</span></div>
+
+      <div class="field" style="text-align:left"><label for="au-email">Email</label>
+        <input id="au-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
+      <div class="field" style="text-align:left"><label for="au-pass">Password</label>
+        <input id="au-pass" type="password" autocomplete="current-password" placeholder="••••••••"></div>
+      <p id="au-err" class="lg-err" role="alert"></p>
+      <button id="au-signin" class="btn primary" style="width:100%">Sign in</button>
+      <button id="au-signup" class="btn" style="width:100%;margin-top:10px">Create an account</button>
+      <p class="lg-note">Your password is handled by Google Firebase — POTLAB never sees it.</p>
+    </div>
+  </div>`;
+}
+
+/* ------------------- auth glue (Firebase) ---------------------- */
+function authError(msg){
+  const el = $("#au-err");
+  if(el){ el.textContent = msg; el.style.display = "block"; }
+  else toast(msg);
+}
+async function authAction(kind){
+  if(!window.potAuth){ authError("Auth is still loading — try again in a second."); return; }
+  const email = ($("#au-email") && $("#au-email").value || "").trim();
+  const pass  = ($("#au-pass")  && $("#au-pass").value  || "");
+  try{
+    if(kind === "google") await window.potAuth.google();
+    else if(kind === "signin"){
+      if(!email || !pass) return authError("Enter your email and password.");
+      await window.potAuth.signInEmail(email, pass);
+    } else if(kind === "signup"){
+      if(!email || pass.length < 6) return authError("Enter an email and a password of at least 6 characters.");
+      await window.potAuth.signUpEmail(email, pass);
+    }
+  }catch(err){
+    authError(prettyAuthError(err));
+  }
+}
+function prettyAuthError(err){
+  const c = (err && err.code) || "";
+  if(c.includes("invalid-credential") || c.includes("wrong-password") || c.includes("user-not-found"))
+    return "This account is incorrect or doesn’t exist. Want to create one? Tap “Create an account” below ↓";
+  if(c.includes("email-already-in-use")) return "That email already has an account — try signing in.";
+  if(c.includes("invalid-email"))        return "That doesn’t look like a valid email.";
+  if(c.includes("weak-password"))        return "Password is too weak (use at least 6 characters).";
+  if(c.includes("popup-closed"))         return "Sign-in was cancelled.";
+  if(c.includes("unauthorized-domain"))  return "This domain isn’t authorized in Firebase yet (add it under Authentication → Settings).";
+  if(c.includes("popup-blocked"))        return "Your browser blocked the Google popup — allow popups and retry.";
+  return "Sign-in failed. Please try again.";
+}
+
+/* called by the Firebase module whenever sign-in state changes */
+window.onPotUserChanged = function(user){
+  store.user = user || null;
+  store.isAdmin = !!(user && user.email && ADMIN_EMAILS
+      .map(e => e.toLowerCase()).includes(user.email.toLowerCase()));
+  updateAcctLink();
+  if(user){ HISTORY.load(user.uid); }   // pull this account's history (cross-device)
+  else { HISTORY.reset(); }
+  route();
+};
+
+/* called by the Firebase module once Firestore is ready */
+window.onPotDBReady = function(){
+  loadRemoteVideos();                    // merge the shared video library
+  if(store.user) HISTORY.load(store.user.uid);
+};
+function updateAcctLink(){
+  const link = $("#acctlink");
+  if(!link) return;
+  if(store.user){
+    const name = (store.user.displayName || store.user.email || "Account").split(/[ @]/)[0];
+    link.textContent = store.isAdmin ? name + " ★" : name;
+  } else {
+    link.textContent = "Sign in";
+  }
+}
+
 const app = $("#app");
 let currentRoute = location.hash || "#/";
 
@@ -2585,20 +3097,34 @@ function nav(to){
 
 function route(){
   const h = currentRoute;
-  const navKey = h.startsWith("#/admin") ? "admin" : h.startsWith("#/guide") ? "guide" : "home";
+  const navKey = h.startsWith("#/admin") ? "admin"
+    : h.startsWith("#/guide") ? "guide"
+    : h.startsWith("#/foryou") ? "foryou"
+    : h.startsWith("#/account") ? "account"
+    : "home";
   document.querySelectorAll("[data-nav]").forEach(a =>
     a.classList.toggle("active", a.dataset.nav === navKey));
   if(h.startsWith("#/video/")){
     const v = store.byId(h.slice(8));
+    if(v) HISTORY.logView(v.id);                 // record that this account opened it
     app.innerHTML = v ? detailHTML(v)
       : `<div class="shell"><div class="empty"><b>Video not found</b><a href="#/" style="color:var(--emerald)">Back to library</a></div></div>`;
+    window.scrollTo(0,0);
+  } else if(h.startsWith("#/foryou")){
+    app.innerHTML = forYouHTML();
+    window.scrollTo(0,0);
+  } else if(h.startsWith("#/account")){
+    app.innerHTML = accountHTML();
     window.scrollTo(0,0);
   } else if(h.startsWith("#/guide")){
     app.innerHTML = guideHTML();
     window.scrollTo(0,0);
     setupGuideScrollSpy();
   } else if(h.startsWith("#/admin")){
-    app.innerHTML = store.authed ? adminHTML() : loginHTML();
+    // Admin panel now requires a signed-in account whose email is whitelisted.
+    if(store.isAdmin){ app.innerHTML = adminHTML(); }
+    else if(store.user){ app.innerHTML = `<div class="shell"><div class="empty"><b>Not an admin account</b>You’re signed in, but this account doesn’t have admin access.<br><a href="#/" style="color:var(--emerald)">Back to library</a></div></div>`; }
+    else { app.innerHTML = `<div class="shell"><div class="empty"><b>Admins only</b>Sign in with an admin account to continue.<br><a href="#/account" style="color:var(--emerald)">Go to sign in →</a></div></div>`; }
     window.scrollTo(0,0);
   } else {
     app.innerHTML = homeHTML();
@@ -2614,6 +3140,20 @@ document.addEventListener("click", e => {
   if(!a) return;
   e.preventDefault();
   nav(a.getAttribute("href"));
+});
+
+/* record click-throughs to YouTube as the strongest interest signal */
+document.addEventListener("click", e => {
+  const yt = e.target.closest('a[href*="youtube.com"], a[href*="youtu.be"]');
+  if(!yt) return;
+  const id = parseYtId(yt.getAttribute("href"));
+  if(id) HISTORY.logClick(id);
+}, true);
+
+/* click (or Enter/Space) on the detail-page player starts inline playback */
+document.addEventListener("click", e => {
+  const p = e.target.closest(".dplayer");
+  if(p) playInline(p);
 });
 
 /* highlight the guide section currently in view within the TOC */
@@ -2645,6 +3185,7 @@ $("#q").addEventListener("input", e => {
   clearTimeout(qTimer);
   qTimer = setTimeout(() => {
     store.query = e.target.value.trim();
+    HISTORY.logSearch(store.query);              // remember searches for recommendations
     if(currentRoute === "#/" || currentRoute === "") route();
     else if(store.query) nav("#/");
   }, 120); // instant-feel debounce
@@ -2704,10 +3245,19 @@ document.addEventListener("click", e => {
     if(!wasOn){ t.classList.add("on"); t.setAttribute("aria-pressed","true"); }
     return;
   }
+  // ---- account / auth buttons ----
+  if(t.id === "au-google"){ authAction("google"); return; }
+  if(t.id === "au-signin"){ authAction("signin"); return; }
+  if(t.id === "au-signup"){ authAction("signup"); return; }
+  if(t.id === "acct-signout"){ window.potAuth && window.potAuth.signOut(); return; }
+  if(t.id === "acct-clear"){ HISTORY.clear(); toast("History cleared"); route(); return; }
+
+  if(t.dataset.rm){ removeVideoById(t.dataset.rm); return; }   // remove from added-videos list
   if(t.id === "a-fetch") return adminFetch();
   if(t.id === "a-save")  return adminSave();
-  if(t.id === "lg-go")   return tryLogin();
-  if(t.id === "a-logout"){ store.authed = false; nav("#/"); return; }
+  if(t.id === "a-rmfind") return adminRemoveFind();
+  if(t.id === "a-rmgo")   return adminRemoveGo();
+  if(t.id === "a-logout"){ window.potAuth && window.potAuth.signOut(); nav("#/"); return; }
   if(t.id === "a-json"){
     const v = adminBuild(); if(!v) return;
     $("#a-jsonpre").textContent = JSON.stringify(v, null, 2) + ",";
@@ -2716,7 +3266,9 @@ document.addEventListener("click", e => {
 });
 document.addEventListener("keydown", e => {
   if(e.key === "Enter" && e.target.id === "a-url"){ e.preventDefault(); adminFetch(); }
-  if(e.key === "Enter" && (e.target.id === "lg-pass" || e.target.id === "lg-user")){ e.preventDefault(); tryLogin(); }
+  if(e.key === "Enter" && e.target.id === "a-rmurl"){ e.preventDefault(); adminRemoveFind(); }
+  if((e.key === "Enter" || e.key === " ") && e.target.classList && e.target.classList.contains("dplayer")){ e.preventDefault(); playInline(e.target); }
+  if(e.key === "Enter" && e.target.id === "au-pass"){ e.preventDefault(); authAction("signin"); }
   // Hidden staff access — Ctrl+Alt+A opens the restricted login (no visible link)
   if(e.altKey && e.ctrlKey && (e.key === "a" || e.key === "A")){ e.preventDefault(); nav("#/admin"); }
 });
@@ -2725,6 +3277,67 @@ document.addEventListener("keydown", e => {
 store.load();
 route();
 hydrate();
+</script>
+
+<!-- ============================================================
+     FIREBASE AUTH (loaded from CDN — no npm/build step needed)
+     Exposes window.potAuth and notifies the app via onPotUserChanged.
+     ============================================================ -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+  import {
+    getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence,
+    GoogleAuthProvider, signInWithPopup,
+    signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut
+  } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+  import {
+    getFirestore, collection, getDocs, doc, getDoc, setDoc
+  } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQ3BYddcvixB-kIsGJ6NiOfmQkqFSpCpE",
+    authDomain: "potlabs.firebaseapp.com",
+    projectId: "potlabs",
+    storageBucket: "potlabs.firebasestorage.app",
+    messagingSenderId: "273655359837",
+    appId: "1:273655359837:web:ad66f9e8474be84e5120b4"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+  setPersistence(auth, browserLocalPersistence).catch(() => {});   // stay signed in across visits
+
+  const provider = new GoogleAuthProvider();
+
+  window.potAuth = {
+    google:      () => signInWithPopup(auth, provider),
+    signInEmail: (e, p) => signInWithEmailAndPassword(auth, e, p),
+    signUpEmail: (e, p) => createUserWithEmailAndPassword(auth, e, p),
+    signOut:     () => signOut(auth)
+  };
+
+  // Firestore data layer: shared video library + cross-device history
+  window.potDB = {
+    async loadVideos(){
+      const snap = await getDocs(collection(db, "videos"));
+      const out = []; snap.forEach(d => out.push({ id: d.id, ...d.data() }));
+      return out;
+    },
+    saveVideo(v){ return setDoc(doc(db, "videos", v.id), v); },
+    removeVideo(id){ return setDoc(doc(db, "videos", id), { id, removed: true }); },
+    async loadHistory(uid){
+      const d = await getDoc(doc(db, "history", uid));
+      return d.exists() ? d.data() : null;
+    },
+    saveHistory(uid, data){ return setDoc(doc(db, "history", uid), data); }
+  };
+
+  if (typeof window.onPotDBReady === "function") window.onPotDBReady();
+
+  onAuthStateChanged(auth, user => {
+    if (typeof window.onPotUserChanged === "function") window.onPotUserChanged(user);
+  });
 </script>
 </body>
 </html>
