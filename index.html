@@ -328,6 +328,10 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .lg-err{display:none;color:var(--lv-adv);font-size:13px;margin:0 0 12px;font-weight:600}
 .lg-note{margin-top:16px;font-size:13px;color:var(--dim)}
 .lg-note a{color:var(--emerald)}
+.lg-err.ok{color:var(--emerald)}
+.au-forgot-row{text-align:right;margin:-6px 0 12px}
+.linkbtn{background:none;border:0;color:var(--dim);font:600 12.5px var(--font-head);cursor:pointer;padding:0}
+.linkbtn:hover{color:var(--emerald);text-decoration:underline}
 .admin h1{font:700 26px var(--font-head);margin-bottom:4px}
 .admin .sub{color:var(--dim);margin-bottom:26px}
 .panel{background:var(--deep);border:1px solid var(--line-soft);border-radius:var(--radius);padding:22px;margin-bottom:20px}
@@ -3015,10 +3019,11 @@ function accountHTML(){
         <input id="au-email" type="email" autocomplete="email" placeholder="you@example.com"></div>
       <div class="field" style="text-align:left"><label for="au-pass">Password</label>
         <input id="au-pass" type="password" autocomplete="current-password" placeholder="••••••••"></div>
+      <div class="au-forgot-row"><button type="button" id="au-forgot" class="linkbtn">Forgot password?</button></div>
       <p id="au-err" class="lg-err" role="alert"></p>
       <button id="au-signin" class="btn primary" style="width:100%">Sign in</button>
       <button id="au-signup" class="btn" style="width:100%;margin-top:10px">Create an account</button>
-      <p class="lg-note">Your password is handled by Google Firebase — POTLAB never sees it.</p>
+      <p class="lg-note">New accounts get a verification email — click the link, then sign in. Your password is handled by Google Firebase; POTLAB never sees it.</p>
     </div>
   </div>`;
 }
@@ -3026,7 +3031,12 @@ function accountHTML(){
 /* ------------------- auth glue (Firebase) ---------------------- */
 function authError(msg){
   const el = $("#au-err");
-  if(el){ el.textContent = msg; el.style.display = "block"; }
+  if(el){ el.textContent = msg; el.style.display = "block"; el.classList.remove("ok"); }
+  else toast(msg);
+}
+function authNotice(msg){
+  const el = $("#au-err");
+  if(el){ el.textContent = msg; el.style.display = "block"; el.classList.add("ok"); }
   else toast(msg);
 }
 async function authAction(kind){
@@ -3037,10 +3047,21 @@ async function authAction(kind){
     if(kind === "google") await window.potAuth.google();
     else if(kind === "signin"){
       if(!email || !pass) return authError("Enter your email and password.");
-      await window.potAuth.signInEmail(email, pass);
+      const cred = await window.potAuth.signInEmail(email, pass);
+      if(cred && cred.user && !cred.user.emailVerified){
+        await window.potAuth.resend().catch(()=>{});
+        await window.potAuth.signOut();
+        return authError("Please verify your email first — we just re-sent the link to " + email + ". Check your inbox (and spam).");
+      }
     } else if(kind === "signup"){
       if(!email || pass.length < 6) return authError("Enter an email and a password of at least 6 characters.");
       await window.potAuth.signUpEmail(email, pass);
+      await window.potAuth.signOut();                 // must verify before the account works
+      return authNotice("Account created! We sent a verification link to " + email + ". Click it, then sign in.");
+    } else if(kind === "reset"){
+      if(!email) return authError("Type your email in the box above, then tap “Forgot password?” again.");
+      await window.potAuth.reset(email);
+      return authNotice("Password reset link sent to " + email + ". Check your inbox to set a new password.");
     }
   }catch(err){
     authError(prettyAuthError(err));
@@ -3052,15 +3073,27 @@ function prettyAuthError(err){
     return "This account is incorrect or doesn’t exist. Want to create one? Tap “Create an account” below ↓";
   if(c.includes("email-already-in-use")) return "That email already has an account — try signing in.";
   if(c.includes("invalid-email"))        return "That doesn’t look like a valid email.";
+  if(c.includes("missing-email"))        return "Enter your email first.";
   if(c.includes("weak-password"))        return "Password is too weak (use at least 6 characters).";
+  if(c.includes("too-many-requests"))    return "Too many attempts — wait a minute and try again.";
   if(c.includes("popup-closed"))         return "Sign-in was cancelled.";
   if(c.includes("unauthorized-domain"))  return "This domain isn’t authorized in Firebase yet (add it under Authentication → Settings).";
   if(c.includes("popup-blocked"))        return "Your browser blocked the Google popup — allow popups and retry.";
-  return "Sign-in failed. Please try again.";
+  return "Something went wrong. Please try again.";
+}
+
+/* treat unverified email/password accounts as not signed in */
+function isPasswordProvider(user){
+  return !!(user && user.providerData && user.providerData.some(p => p.providerId === "password"));
 }
 
 /* called by the Firebase module whenever sign-in state changes */
 window.onPotUserChanged = function(user){
+  if(user && !user.emailVerified && isPasswordProvider(user)){
+    store.user = null; store.isAdmin = false;   // gate: verification required
+    updateAcctLink(); HISTORY.reset(); route();
+    return;
+  }
   store.user = user || null;
   store.isAdmin = !!(user && user.email && ADMIN_EMAILS
       .map(e => e.toLowerCase()).includes(user.email.toLowerCase()));
@@ -3249,6 +3282,7 @@ document.addEventListener("click", e => {
   if(t.id === "au-google"){ authAction("google"); return; }
   if(t.id === "au-signin"){ authAction("signin"); return; }
   if(t.id === "au-signup"){ authAction("signup"); return; }
+  if(t.id === "au-forgot"){ authAction("reset"); return; }
   if(t.id === "acct-signout"){ window.potAuth && window.potAuth.signOut(); return; }
   if(t.id === "acct-clear"){ HISTORY.clear(); toast("History cleared"); route(); return; }
 
@@ -3288,7 +3322,8 @@ hydrate();
   import {
     getAuth, onAuthStateChanged, setPersistence, browserLocalPersistence,
     GoogleAuthProvider, signInWithPopup,
-    signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut
+    signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut,
+    sendEmailVerification, sendPasswordResetEmail
   } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
   import {
     getFirestore, collection, getDocs, doc, getDoc, setDoc
@@ -3313,8 +3348,14 @@ hydrate();
   window.potAuth = {
     google:      () => signInWithPopup(auth, provider),
     signInEmail: (e, p) => signInWithEmailAndPassword(auth, e, p),
-    signUpEmail: (e, p) => createUserWithEmailAndPassword(auth, e, p),
-    signOut:     () => signOut(auth)
+    signUpEmail: async (e, p) => {
+      const cred = await createUserWithEmailAndPassword(auth, e, p);
+      try{ await sendEmailVerification(cred.user); }catch(_){}
+      return cred;
+    },
+    resend: () => auth.currentUser ? sendEmailVerification(auth.currentUser) : Promise.reject(new Error("no-user")),
+    reset:  (e) => sendPasswordResetEmail(auth, e),
+    signOut: () => signOut(auth)
   };
 
   // Firestore data layer: shared video library + cross-device history
