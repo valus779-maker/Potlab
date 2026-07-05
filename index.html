@@ -62,6 +62,8 @@
   --uhc-dim:#333f10;
   --axe:#ee5a52;           /* axe (red) */
   --axe-dim:#4a1f1c;
+  --packs:#ff5ecb;         /* mods & texture packs (fuchsia) */
+  --packs-dim:#4d1840;
 
   --lv-beg:#3ddc84; --lv-int:#f2c14e; --lv-adv:#f26d6d;
 
@@ -145,6 +147,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .modecard.k-vanilla{--mc:var(--vanilla);--mcd:var(--vanilla-dim)}
 .modecard.k-uhc{--mc:var(--uhc);--mcd:var(--uhc-dim)}
 .modecard.k-axe{--mc:var(--axe);--mcd:var(--axe-dim)}
+.modecard.k-packs{--mc:var(--packs);--mcd:var(--packs-dim)}
 .modecard.k-fund{--mc:var(--emerald);--mcd:var(--emerald-dim)}
 .kitdoor{position:relative;padding:22px 22px 20px;border-radius:var(--radius);text-align:left;border:1px solid var(--line);
   background:var(--deep);overflow:hidden;transition:transform .3s var(--ease),border-color .3s var(--ease);cursor:pointer}
@@ -196,6 +199,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .chip.on.k-vanilla{background:var(--vanilla);border-color:var(--vanilla);color:var(--void)}
 .chip.on.k-uhc{background:var(--uhc);border-color:var(--uhc);color:var(--void)}
 .chip.on.k-axe{background:var(--axe);border-color:var(--axe);color:var(--void)}
+.chip.on.k-packs{background:var(--packs);border-color:var(--packs);color:var(--void)}
 .chip.more{border-style:dashed;color:var(--faint)}
 .factive{display:flex;flex-wrap:wrap;gap:7px;align-items:center;border-top:1px solid var(--line-soft);padding-top:12px}
 .factive:empty{display:none}
@@ -227,7 +231,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .card:hover{transform:translateY(-5px);border-color:var(--line);box-shadow:var(--shadow)}
 .card:active{transform:translateY(-2px)}
 .card .edge{height:3px}
-.card.k-neth .edge{background:var(--nether)} .card.k-dia .edge{background:var(--diamond)} .card.k-sword .edge{background:var(--steel)} .card.k-smp .edge{background:var(--smp)} .card.k-diasmp .edge{background:var(--diasmp)} .card.k-crystal .edge{background:var(--crystal)} .card.k-mace .edge{background:var(--mace)} .card.k-vanilla .edge{background:var(--vanilla)} .card.k-uhc .edge{background:var(--uhc)} .card.k-axe .edge{background:var(--axe)} .card.k-fund .edge{background:var(--emerald)}
+.card.k-neth .edge{background:var(--nether)} .card.k-dia .edge{background:var(--diamond)} .card.k-sword .edge{background:var(--steel)} .card.k-smp .edge{background:var(--smp)} .card.k-diasmp .edge{background:var(--diasmp)} .card.k-crystal .edge{background:var(--crystal)} .card.k-mace .edge{background:var(--mace)} .card.k-vanilla .edge{background:var(--vanilla)} .card.k-uhc .edge{background:var(--uhc)} .card.k-axe .edge{background:var(--axe)} .card.k-packs .edge{background:var(--packs)} .card.k-fund .edge{background:var(--emerald)}
 .card.k-both .edge{background:linear-gradient(90deg,var(--nether),var(--diamond))}
 .thumbwrap{position:relative;aspect-ratio:16/9;background:var(--raise);display:block}
 .thumbwrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
@@ -251,6 +255,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .badge.k-vanilla{color:var(--vanilla);background:var(--vanilla-dim)}
 .badge.k-uhc{color:var(--uhc);background:var(--uhc-dim)}
 .badge.k-axe{color:var(--axe);background:var(--axe-dim)}
+.badge.k-packs{color:var(--packs);background:var(--packs-dim)}
 .badge.k-fund{color:var(--emerald);background:var(--emerald-dim)}
 .badge.ver-mod{color:#7fd0ff;background:#0d2f3f}
 .badge.ver-old{color:#f2b24e;background:#3d2c12}
@@ -563,8 +568,8 @@ const TOPIC_GROUPS = {
    videos (potting, potion timing) belong to neth+dia but NOT sword.
    To add a future mode: add it to MODES + MODE_ORDER + MODE_HEX and
    the whole UI (filters, sections, doors, badges) picks it up. */
-const MODES = { neth:"Netherite Pot", dia:"Diamond Pot", sword:"Sword", smp:"SMP", diasmp:"Diamond SMP", crystal:"Crystal", mace:"Mace", vanilla:"Vanilla", uhc:"UHC", axe:"Axe", fund:"Fundamentals" };
-const MODE_ORDER = ["neth","dia","sword","smp","diasmp","crystal","mace","vanilla","uhc","axe","fund"];
+const MODES = { neth:"Netherite Pot", dia:"Diamond Pot", sword:"Sword", smp:"SMP", diasmp:"Diamond SMP", crystal:"Crystal", mace:"Mace", vanilla:"Vanilla", uhc:"UHC", axe:"Axe", packs:"Mods & Packs", fund:"Fundamentals" };
+const MODE_ORDER = ["neth","dia","sword","smp","diasmp","crystal","mace","vanilla","uhc","axe","packs","fund"];
 const ALL_MODES = MODE_ORDER.slice();
 /* Per-mode display metadata — the hero mode grid renders straight from this,
    so adding a future mode is just one more MODES + MODE_ORDER + MODE_META entry. */
@@ -579,6 +584,7 @@ const MODE_META = {
   vanilla: { icon:"◇", blurb:"The all-kit fusion — crystals, mace &amp; gear together" },
   uhc:     { icon:"♁", blurb:"No natural regen — resource &amp; utility survival" },
   axe:     { icon:"⛏", blurb:"Shield disabling &amp; heavy single-hit punishes" },
+  packs:   { icon:"✜", blurb:"Texture packs, clients &amp; mods — crosshairs, FPS &amp; visuals" },
   fund:    { icon:"✦", blurb:"Cross-mode basics: aim, movement, clicking &amp; guides" },
 };
 // Back-compat alias so older references keep working
@@ -935,10 +941,10 @@ const SEED_VIDEOS = [
     level:"intermediate", kit:"both", format:"Tutorial",
     topics:["Tracking","Crosshair placement","Hit consistency"], tags:["aim","crosshair"], date:"2024-04-27", duration:null },
 
-  { id:"TiE7w9tO9CE", title:"Top 3 BEST Crosshairs For Bridging and PvP in Minecraft", creator:"", hydrate:true,
-    desc:"A quick look at crosshair setups that improve accuracy and crosshair placement in fights.",
+  { id:"TiE7w9tO9CE", title:"Top 3 BEST Crosshairs For Bridging and PvP in Minecraft", creator:"", hydrate:true, modes:["packs"],
+    desc:"A rundown of the best custom crosshair packs for cleaner aim and better crosshair placement in fights.",
     level:"beginner", kit:"both", format:"Tutorial",
-    topics:["Crosshair placement","Sensitivity"], tags:["crosshair","settings"], date:"2021-05-16", duration:null },
+    topics:["Crosshair placement","Sensitivity"], tags:["crosshair","texture pack","settings"], date:"2021-05-16", duration:null },
 
   /* ---------- Clicking ---------- */
   { id:"iw161bFzzrw", title:"How To Always Butterfly Click 20+CPS on ANY MOUSE", creator:"", hydrate:true, ver:"1.8",
@@ -972,10 +978,10 @@ const SEED_VIDEOS = [
     level:"beginner", kit:"both", format:"Tutorial",
     topics:["Basic PvP","Movement basics","General"], tags:["beginner","fundamentals","guide"], date:"2020-11-21", duration:null },
 
-  { id:"LEjCk_umSPw", title:"The BEST Minecraft SETTINGS for PVP in 2025 | Lunar + MC Settings", creator:"", hydrate:true,
-    desc:"A settings-focused guide — FOV, sensitivity, keybinds and client setup that give you a cleaner base to fight from.",
+  { id:"LEjCk_umSPw", title:"The BEST Minecraft SETTINGS for PVP in 2025 | Lunar + MC Settings", creator:"", hydrate:true, modes:["packs"],
+    desc:"A settings-focused guide — FOV, sensitivity, keybinds and Lunar Client setup that give you a cleaner base to fight from.",
     level:"beginner", kit:"both", format:"Tutorial",
-    topics:["Sensitivity","Inventory setup","Hotkeys"], tags:["settings","sensitivity","2025"], date:"2025-01-23", duration:null },
+    topics:["Sensitivity","Inventory setup","Hotkeys"], tags:["client","lunar","settings","sensitivity","2025"], date:"2025-01-23", duration:null },
 
   /* =========================================================
      BATCH 4 — SWORD MODE. A recognised tier-test kit built around
